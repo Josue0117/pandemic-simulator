@@ -2,8 +2,9 @@
   <div class="container">
     <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
     <grid-form @create-new-grid="createCustomGrid" tittle="Please enter your desired 2-D grid size"></grid-form>
-    <img v-if="height == 0 && width ==0" src="./assets/virus3.jpg">
+    <img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
     <grid v-else :height="height" :width="width"></grid>
+    <pandemic-points @change-pnt-to-set="changePointToSet" v-if="height != 0 && width != 0"></pandemic-points>
   </div>
 </template>
 
@@ -11,20 +12,25 @@
 import TittleBar from './components/TittleBar.vue'
 import GridForm from './components/GridForm.vue'
 import Grid from './components/Grid.vue'
+import PandemicPoints from './components/PandemicPoints.vue'
 
 export default {
   name: 'App',
-  components: { TittleBar , GridForm , Grid },
+  components: { TittleBar , GridForm , Grid , PandemicPoints },
   data() {
     return{
       height: 0,
       width:  0,
+      pointToSet: null,
     };
   },
   methods: {
     createCustomGrid( inputHeight , inputWidth ) {
       this.height = inputHeight;
       this.width  = inputWidth;
+    },
+    changePointToSet( pointsToSet ) {
+      this.pointToSet = pointsToSet; 
     }
   },
 }
@@ -59,6 +65,17 @@ img{
   left: 47%;
   height: 450px;
   border-radius: 15px;
+}
+
+
+
+button{
+  height: 30px;
+  background: #0553a0;
+  border: solid 1px #2e83e4;
+  border-radius: 5px;
+  margin-right: 100px;
+  color: white;
 }
 
 td{

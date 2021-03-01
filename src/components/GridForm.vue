@@ -88,15 +88,6 @@ export default {
         color: white;
     }
 
-    button{
-        height: 30px;
-        background: #0553a0;
-        border: solid 1px #2e83e4;
-        border-radius: 5px;
-        margin-right: 100px;
-        color: white;
-    }
-
     p.invalid{
         margin-right: 100px;
         color: red;
