@@ -2,7 +2,7 @@
     <section>
         <p>{{ tittle }}</p>
         <form @submit.prevent="createGrid">
-            <div class="form-control" :class="{invalid: invalidHeigth == true}">
+            <div class="form-control" :class="{invalid: invalidHeight == true}">
                 <label for="height">Heigth</label>
                 <input id="height" name="height" type="number" v-model="height" @change="validateHeight"/>
                 <p class="invalid" v-if="invalidHeigth">Invalid input, just integer and less than 100 allowed</p>
@@ -26,26 +26,31 @@ export default {
         return{
             height: 0,
             width: 0,
-            invalidHeigth: false,
+            invalidHeight: false,
             invalidWidth: false,
         };
     },
     methods: {
         createGrid() {
-            console.log('Height: '+ this.height + ', Width: ' + this.width);
-            this.height = 0;
-            this.width = 0;
+            if( this.height == 0 || this.width == 0 ){
+                alert('Height or width inputs empty!');
+            } else {
+                console.log('Height: '+ this.height + ', Width: ' + this.width);
+                this.$emit( 'create-new-grid' , this.height , this.width );
+                this.height = 0;
+                this.width  = 0;
+            }
         },
         validateHeight() {
-            if( this.height > 100 || !(this.height%1 == 0) || this.height <= 0 ) {
-                this.invalidHeigth = true;
+            if( this.height > 100 || !(this.height%1 == 0) || this.height < 0 ) {
+                this.invalidHeight = true;
                 this.height = 0;
             } else {
-                this.invalidHeigth = false;
+                this.invalidHeight = false;
             }
         },
         validateWidth() {
-            if( this.width > 100 || !(this.width%1 == 0) || this.width <= 0 ) {
+            if( this.width > 100 || !(this.width%1 == 0) || this.width < 0 ) {
                 this.invalidWidth = true;
                 this.width = 0;
             } else {
@@ -58,7 +63,7 @@ export default {
 
 <style scoped>
     section{
-        width: 50%;
+        width: 45%;
         left: 15%;
         margin-top: 20px;
         border-radius: 15px;
