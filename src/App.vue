@@ -1,13 +1,17 @@
 <template>
-  <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
+  <div class="container">
+    <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
+    <grid-form tittle="Please enter your desired 2-D grid size"></grid-form>
+  </div>
 </template>
 
 <script>
 import TittleBar from './components/TittleBar.vue'
+import GridForm from './components/GridForm.vue'
 
 export default {
   name: 'App',
-  components: { TittleBar },
+  components: { TittleBar , GridForm },
 }
 </script>
 
@@ -25,5 +29,11 @@ body{
   text-align: center;
   color: #ffffff;
   top: 0;
+}
+
+div.container{
+  position: absolute;
+  width: 70%;
+  left: 15%;
 }
 </style>

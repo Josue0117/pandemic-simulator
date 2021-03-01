@@ -12,11 +12,8 @@ export default {
 
 <style scoped>
     header {
-        position: absolute;
+        margin-top: 10px;
         padding: 15px;
-        width: 70%;
-        right: 15%;
-        top: 10px;
         border-radius: 15px;
         background-color: #242327;
     }

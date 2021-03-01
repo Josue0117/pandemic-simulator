@@ -1,0 +1,110 @@
+<template id="this">
+    <section>
+        <p>{{ tittle }}</p>
+        <form @submit.prevent="createGrid">
+            <div class="form-control" :class="{invalid: invalidHeigth == true}">
+                <label for="height">Heigth</label>
+                <input id="height" name="height" type="number" v-model="height" @change="validateHeight"/>
+                <p class="invalid" v-if="invalidHeigth">Invalid input, just integer and less than 100 allowed</p>
+            </div>
+            <div class="form-control" :class="{invalid: invalidWidth == true}">
+                <label for="width">Width</label>
+                <input id="width" name="width" type="number" v-model="width" @change="validateWidth"/>
+                <p class="invalid" v-if="invalidWidth">Invalid input, just integer and less than 100 allowed</p>
+            </div>
+            <div>
+                <button>Create Grid</button>
+            </div>
+        </form>
+    </section>
+</template>
+
+<script>
+export default {
+    props: ['tittle'],
+    data() {
+        return{
+            height: 0,
+            width: 0,
+            invalidHeigth: false,
+            invalidWidth: false,
+        };
+    },
+    methods: {
+        createGrid() {
+            console.log('Height: '+ this.height + ', Width: ' + this.width);
+            this.height = 0;
+            this.width = 0;
+        },
+        validateHeight() {
+            if( this.height > 100 || !(this.height%1 == 0) || this.height <= 0 ) {
+                this.invalidHeigth = true;
+                this.height = 0;
+            } else {
+                this.invalidHeigth = false;
+            }
+        },
+        validateWidth() {
+            if( this.width > 100 || !(this.width%1 == 0) || this.width <= 0 ) {
+                this.invalidWidth = true;
+                this.width = 0;
+            } else {
+                this.invalidWidth = false;
+            }
+        },
+    }
+}
+</script>
+
+<style scoped>
+    section{
+        width: 50%;
+        left: 15%;
+        margin-top: 20px;
+        border-radius: 15px;
+        background: #242327;
+        border: solid 1px #48464e;
+    }
+
+    form{
+        color: #a9a6b4;
+        text-align: right;
+        padding-bottom: 20px;
+    }
+
+    div{
+        margin-top: 10px;
+    }
+
+    input{
+        background: #18191a;
+        border: solid 1px #48464e;
+        border-radius: 5px;
+        margin-right: 100px;
+        margin-left: 30px;
+        color: white;
+    }
+
+    button{
+        height: 30px;
+        background: #0553a0;
+        border: solid 1px #2e83e4;
+        border-radius: 5px;
+        margin-right: 100px;
+        color: white;
+    }
+
+    p.invalid{
+        margin-right: 100px;
+        color: red;
+        font-size: 12px;
+    }
+
+    .form-control.invalid input{
+        border-color: red;
+    }
+
+    .form-control.invalid label{
+        color: red;
+    }
+</style>
