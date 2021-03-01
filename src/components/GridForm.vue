@@ -5,7 +5,7 @@
             <div class="form-control" :class="{invalid: invalidHeight == true}">
                 <label for="height">Heigth</label>
                 <input id="height" name="height" type="number" v-model="height" @change="validateHeight"/>
-                <p class="invalid" v-if="invalidHeigth">Invalid input, just integer and less than 50 allowed</p>
+                <p class="invalid" v-if="invalidHeight">Invalid input, just integer and less than 50 allowed</p>
             </div>
             <div class="form-control" :class="{invalid: invalidWidth == true}">
                 <label for="width">Width</label>

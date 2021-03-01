@@ -9,8 +9,26 @@
 <script>
 export default {
     props: [ 'height' , 'width'],
+    mounted: function() {
+        const table = document.getElementById("grid");
+
+        for(let i=0; i<this.height; i++){
+            var newRow = document.createElement('tr');
+            for(let j=0; j<this.width; j++){
+                var newTd = document.createElement('td');
+                newTd.setAttribute('id','id'+i+','+j);
+                newTd.setAttribute('class','grid');
+                newRow.appendChild(newTd);
+            }
+            table.appendChild(newRow);
+        }  
+        console.log(this.height+' '+this.width);
+    },
     updated: function() {
         const table = document.getElementById("grid");
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
 
         for(let i=0; i<this.height; i++){
             var newRow = document.createElement('tr');

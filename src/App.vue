@@ -2,7 +2,8 @@
   <div class="container">
     <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
     <grid-form @create-new-grid="createCustomGrid" tittle="Please enter your desired 2-D grid size"></grid-form>
-    <grid :height="height" :width="width"></grid>
+    <img v-if="height == 0 && width ==0" src="./assets/virus3.jpg">
+    <grid v-else :height="height" :width="width"></grid>
   </div>
 </template>
 
@@ -51,10 +52,19 @@ div.container{
   left: 15%;
 }
 
+img{
+  position: absolute;
+  top: 127.81px;
+  width: 53%;
+  left: 47%;
+  height: 450px;
+  border-radius: 15px;
+}
+
 td{
-        border: solid 1px #48464e;
-        border-radius: 5px;
-        background: #242327;
-        height: 30px;
-    }
+  border: solid 1px #48464e;
+  border-radius: 5px;
+  background: #242327;
+  height: 30px;
+}
 </style>
