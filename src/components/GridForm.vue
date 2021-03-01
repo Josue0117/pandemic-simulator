@@ -5,12 +5,12 @@
             <div class="form-control" :class="{invalid: invalidHeight == true}">
                 <label for="height">Heigth</label>
                 <input id="height" name="height" type="number" v-model="height" @change="validateHeight"/>
-                <p class="invalid" v-if="invalidHeigth">Invalid input, just integer and less than 100 allowed</p>
+                <p class="invalid" v-if="invalidHeigth">Invalid input, just integer and less than 50 allowed</p>
             </div>
             <div class="form-control" :class="{invalid: invalidWidth == true}">
                 <label for="width">Width</label>
                 <input id="width" name="width" type="number" v-model="width" @change="validateWidth"/>
-                <p class="invalid" v-if="invalidWidth">Invalid input, just integer and less than 100 allowed</p>
+                <p class="invalid" v-if="invalidWidth">Invalid input, just integer and less than 50 allowed</p>
             </div>
             <div>
                 <button>Create Grid</button>
@@ -37,12 +37,10 @@ export default {
             } else {
                 console.log('Height: '+ this.height + ', Width: ' + this.width);
                 this.$emit( 'create-new-grid' , this.height , this.width );
-                this.height = 0;
-                this.width  = 0;
             }
         },
         validateHeight() {
-            if( this.height > 100 || !(this.height%1 == 0) || this.height < 0 ) {
+            if( this.height > 50 || !(this.height%1 == 0) || this.height < 0 ) {
                 this.invalidHeight = true;
                 this.height = 0;
             } else {
@@ -50,7 +48,7 @@ export default {
             }
         },
         validateWidth() {
-            if( this.width > 100 || !(this.width%1 == 0) || this.width < 0 ) {
+            if( this.width > 50 || !(this.width%1 == 0) || this.width < 0 ) {
                 this.invalidWidth = true;
                 this.width = 0;
             } else {

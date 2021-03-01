@@ -24,7 +24,6 @@ export default {
     createCustomGrid( inputHeight , inputWidth ) {
       this.height = inputHeight;
       this.width  = inputWidth;
-      console.log(this.height + " " + this.width);
     }
   },
 }
@@ -51,4 +50,11 @@ div.container{
   width: 70%;
   left: 15%;
 }
+
+td{
+        border: solid 1px #48464e;
+        border-radius: 5px;
+        background: #242327;
+        height: 30px;
+    }
 </style>
