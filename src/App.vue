@@ -1,26 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TittleBar from './components/TittleBar.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: { TittleBar },
 }
 </script>
 
 <style>
+body{
+  margin: 0%;
+  padding: 0%;
+  background: #18191a;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #ffffff;
+  top: 0;
 }
 </style>
