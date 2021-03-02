@@ -5,7 +5,7 @@
                 id="initialPts" 
                 name="pointsToSet" 
                 type="radio" 
-                value="initial" 
+                value="infected" 
                 v-model="pointsToSet"
                 @change="changePointToSet"
             />

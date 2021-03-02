@@ -41,7 +41,7 @@ export default {
       this.height = inputHeight;
       this.width  = inputWidth;
     },
-    changeSimulationState( newState ) {
+    changeSimulationState( newState ){
       this.simulationState = newState;
     },
     changePointToSet( pointType ) {

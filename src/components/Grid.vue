@@ -66,37 +66,82 @@ export default {
         };
     },
     methods: {
+        // TO DO: move to a helper.
+        createGrid(){
+            for(let i=0; i<this.tempHeight; i++) {
+                const row = [];
+                for(let j=0; j<this.tempWidth; j++) {
+                    row.push('y'+i+'x'+j);
+                }
+                this.grid.push(row);
+            }
+            console.log(this.grid)
+        },
         // TO DO: move to helper.
-        updateGrid( point , changeType ) {
+        updateGrid( point , pointType , changeType ) {
             const idX = (point.id).indexOf('x');
             const x = (point.id).substring(idX+1);
             const idY = (point.id).indexOf('y');
             const y = (point.id).substring(idY+1,idX);
-            this.grid[y][x] = changeType;
+            if( changeType === 'add' ) {
+                this.grid[y][x] = pointType;
+            } else {
+                this.grid[y][x] = 'y'+y+'x'+x;
+            }
             console.log(y+','+x);
             console.log(this.grid);
         },
         // TO DO: move to helper.
-        changeCell( point , changeType ) {
-            point.setAttribute('class',changeType);
-            const style = document.createAttribute('style');
-            if( changeType === 'inmune' ) {
-                style.value = 'border: solid 1px #00fa0c; background: #05c03d6b;'
+        updateTableStyle( point , pointType , changeType ) {
+            if( changeType === 'add' ) {
+                point.setAttribute('class',pointType);
+                const style = document.createAttribute('style');
+                if( pointType === 'inmune' ) {
+                    style.value = 'border: solid 1px #00fa0c; background: #05c03d6b;'
+                } else {
+                    style.value = 'border: solid 1px #fa0000; background: #c005056b;'
+                }
+                point.setAttributeNode(style);
             } else {
-                style.value = 'border: solid 1px #fa0000; background: #c005056b;'
+                point.setAttribute('class','unselected');
+                point.removeAttribute('style');
             }
-            point.setAttributeNode(style);
-            this.updateGrid( point , changeType );
         },
         setPoint( id , pointType ) {
             const point = document.getElementById(id);
             if( point.className === 'unselected' ) {
-                this.changeCell( point , pointType );
+                this.updateGrid( point , pointType , 'add' );
+                this.updateTableStyle( point , pointType , 'add' );
             } else if( point.className === pointType ) {
-                point.setAttribute('class','unselected');
-                point.removeAttribute('style');
+                this.updateGrid( point , pointType , 'remove' );
+                this.updateTableStyle( point , pointType , 'remove' );
             }
-        }
+        },
+        runSimulation() {
+
+            //let gridUpdated = false;
+            //do {
+//                setTimeout(function(){
+                    let infectedIds = [];
+                    for(let i=0; i<this.tempHeight; i++) {
+                        for(let j=0; j<this.tempWidth; j++) {
+                            if(this.grid[i][j] === 'infected'){
+                                infectedIds.push( { 'i':i , 'j':j } );
+                            }
+                        }
+                    }
+                    if( infectedIds ) {
+                        console.log(infectedIds)
+                        infectedIds.forEach(element => {
+                            if( this.grid[element.i-1][element.j] ){ this.setPoint( this.grid[element.i-1][element.j] , 'infected' )}
+                            if( this.grid[element.i+1][element.j] ){ this.setPoint( this.grid[element.i+1][element.j] , 'infected' )}
+                            if( this.grid[element.i][element.j-1] ){ this.setPoint( this.grid[element.i][element.j-1] , 'infected' )}
+                            if( this.grid[element.i][element.j+1] ){ this.setPoint( this.grid[element.i][element.j+1] , 'infected' )}
+                        });
+                    }
+            //    }, 2000);
+            //} while( gridUpdated );
+        },
     },
     mounted: function() {
         const table = document.getElementById("grid");
@@ -110,26 +155,18 @@ export default {
                 newRow.appendChild(newTd);
             }
             table.appendChild(newRow);
-        }  
+        }
+        this.createGrid();  
         // TO DO: Delte.
         console.log(this.height+' '+this.width);
     },
     updated: function() {
-        if(this.simulationState === 'launched') {
+        if( this.simulationState === 'launched' ) {
+            this.runSimulation();
             // TO DO: Delete.
             console.log('Simulation launched');
-            // TO DO: move to a helper.
-            for(let i=0; i<this.tempHeight; i++) {
-                const row = [];
-                for(let j=0; j<this.tempWidth; j++) {
-                    row.push('null');
-                }
-                this.grid.push(row);
-            }
-            // TO DO: delete.
-            console.log(this.grid)
             // Note: keep on this file.
-            this.$emit( 'change-simulation-state' , 'inProgres');
+            this.$emit( 'change-simulation-state' , 'ended');
         }
     },
     /*
