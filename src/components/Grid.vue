@@ -60,15 +60,13 @@ export default {
     methods: {
         changeCell( point , changeType ) {
             point.setAttribute('class',changeType);
+            const style = document.createAttribute('style');
             if( changeType === 'inmune' ) {
-                const style = document.createAttribute('style');
                 style.value = 'border: solid 1px #00fa0c; background: #05c03d6b;'
-                point.setAttributeNode(style);
             } else {
-                const style = document.createAttribute('style');
                 style.value = 'border: solid 1px #fa0000; background: #c005056b;'
-                point.setAttributeNode(style);
             }
+            point.setAttributeNode(style);
         },
         setPoint( id , pointType ) {
             const point = document.getElementById(id);
