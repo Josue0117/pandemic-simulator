@@ -23,7 +23,7 @@
             <label for="inmunePts">Set inmune points</label>
         </div>
         <div>
-            <button>Simulate Pandemic</button>
+            <button @click="startSimulation">Simulate Pandemic</button>
         </div>
     </section>
 </template>
@@ -38,6 +38,9 @@ export default {
     methods: {
         changePointToSet(){
             this.$emit( 'change-pnt-to-set' , this.pointsToSet );
+        },
+        startSimulation() {
+            this.$emit( 'start-simulation' );
         }
     }
 }

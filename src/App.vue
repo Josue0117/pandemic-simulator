@@ -5,8 +5,17 @@
     <!---<img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
     <grid v-else :height="height" :width="width"></grid> 
     <pandemic-points @change-pnt-to-set="changePointToSet" v-if="height != 0 && width != 0"></pandemic-points> --->
-    <grid :height="height" :width="width" :pointType="pointType"></grid> 
-    <pandemic-points @change-pnt-to-set="changePointToSet"></pandemic-points>
+    <grid 
+      :height="height" 
+      :width="width" 
+      :pointType="pointType" 
+      :simulationState="simulationState" 
+      @change-simulation-state="changeSimulationState">
+    </grid> 
+    <pandemic-points 
+      @change-pnt-to-set="changePointToSet" 
+      @startSimulation="launchSimulation">
+    </pandemic-points>
   </div>
 </template>
 
@@ -24,6 +33,7 @@ export default {
       height: 0,
       width:  0,
       pointType: null,
+      simulationState: 'unlaunched',
     };
   },
   methods: {
@@ -31,10 +41,16 @@ export default {
       this.height = inputHeight;
       this.width  = inputWidth;
     },
+    changeSimulationState( newState ) {
+      this.simulationState = newState;
+    },
     changePointToSet( pointType ) {
       this.pointType = pointType; 
-      console.log(this.pointType)
-    }
+      console.log(this.pointType);
+    },
+    launchSimulation() {
+      this.simulationState = 'launched';
+    },
   },
 }
 </script>

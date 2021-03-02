@@ -3,52 +3,52 @@
         <header>New Simulation</header>
         <table id="grid">
             <tr>
-                <td id="id01" class="unselected" @click="setPoint('id01',pointType)"></td>
-                <td id="id02" class="unselected" @click="setPoint('id02',pointType)"></td>
-                <td id="id03" class="unselected" @click="setPoint('id03',pointType)"></td>
-                <td id="id04" class="unselected" @click="setPoint('id04',pointType)"></td>
-                <td id="id05" class="unselected" @click="setPoint('id05',pointType)"></td>
-                <td id="id06" class="unselected" @click="setPoint('id06',pointType)"></td>
+                <td id="y0x0" class="unselected" @click="setPoint('y0x0',pointType)"></td>
+                <td id="y0x1" class="unselected" @click="setPoint('y0x1',pointType)"></td>
+                <td id="y0x2" class="unselected" @click="setPoint('y0x2',pointType)"></td>
+                <td id="y0x3" class="unselected" @click="setPoint('y0x3',pointType)"></td>
+                <td id="y0x4" class="unselected" @click="setPoint('y0x4',pointType)"></td>
+                <td id="y0x5" class="unselected" @click="setPoint('y0x5',pointType)"></td>
             </tr>
             <tr>
-                <td id="id11" class="unselected" @click="setPoint('id11',pointType)"></td>
-                <td id="id12" class="unselected" @click="setPoint('id12',pointType)"></td>
-                <td id="id13" class="unselected" @click="setPoint('id13',pointType)"></td>
-                <td id="id14" class="unselected" @click="setPoint('id14',pointType)"></td>
-                <td id="id15" class="unselected" @click="setPoint('id15',pointType)"></td>
-                <td id="id16" class="unselected" @click="setPoint('id16',pointType)"></td>
+                <td id="y1x0" class="unselected" @click="setPoint('y1x0',pointType)"></td>
+                <td id="y1x1" class="unselected" @click="setPoint('y1x1',pointType)"></td>
+                <td id="y1x2" class="unselected" @click="setPoint('y1x2',pointType)"></td>
+                <td id="y1x3" class="unselected" @click="setPoint('y1x3',pointType)"></td>
+                <td id="y1x4" class="unselected" @click="setPoint('y1x4',pointType)"></td>
+                <td id="y1x5" class="unselected" @click="setPoint('y1x5',pointType)"></td>
             </tr>
             <tr>
-                <td id="id21" class="unselected" @click="setPoint('id21',pointType)"></td>
-                <td id="id22" class="unselected" @click="setPoint('id22',pointType)"></td>
-                <td id="id23" class="unselected" @click="setPoint('id23',pointType)"></td>
-                <td id="id24" class="unselected" @click="setPoint('id24',pointType)"></td>
-                <td id="id25" class="unselected" @click="setPoint('id25',pointType)"></td>
-                <td id="id26" class="unselected" @click="setPoint('id26',pointType)"></td>
+                <td id="y2x0" class="unselected" @click="setPoint('y2x0',pointType)"></td>
+                <td id="y2x1" class="unselected" @click="setPoint('y2x1',pointType)"></td>
+                <td id="y2x2" class="unselected" @click="setPoint('y2x2',pointType)"></td>
+                <td id="y2x3" class="unselected" @click="setPoint('y2x3',pointType)"></td>
+                <td id="y2x4" class="unselected" @click="setPoint('y2x4',pointType)"></td>
+                <td id="y2x5" class="unselected" @click="setPoint('y2x5',pointType)"></td>
             </tr>
             <tr>
-                <td id="id31" class="unselected" @click="setPoint('id31',pointType)"></td>
-                <td id="id32" class="unselected" @click="setPoint('id32',pointType)"></td>
-                <td id="id33" class="unselected" @click="setPoint('id33',pointType)"></td>
-                <td id="id34" class="unselected" @click="setPoint('id34',pointType)"></td>
-                <td id="id35" class="unselected" @click="setPoint('id35',pointType)"></td>
-                <td id="id36" class="unselected" @click="setPoint('id36',pointType)"></td>
+                <td id="y3x0" class="unselected" @click="setPoint('y3x0',pointType)"></td>
+                <td id="y3x1" class="unselected" @click="setPoint('y3x1',pointType)"></td>
+                <td id="y3x2" class="unselected" @click="setPoint('y3x2',pointType)"></td>
+                <td id="y3x3" class="unselected" @click="setPoint('y3x3',pointType)"></td>
+                <td id="y3x4" class="unselected" @click="setPoint('y3x4',pointType)"></td>
+                <td id="y3x5" class="unselected" @click="setPoint('y3x5',pointType)"></td>
             </tr>
             <tr>
-                <td id="id41" class="unselected" @click="setPoint('id41',pointType)"></td>
-                <td id="id42" class="unselected" @click="setPoint('id42',pointType)"></td>
-                <td id="id43" class="unselected" @click="setPoint('id43',pointType)"></td>
-                <td id="id44" class="unselected" @click="setPoint('id44',pointType)"></td>
-                <td id="id45" class="unselected" @click="setPoint('id45',pointType)"></td>
-                <td id="id46" class="unselected" @click="setPoint('id46',pointType)"></td>
+                <td id="y4x0" class="unselected" @click="setPoint('y4x0',pointType)"></td>
+                <td id="y4x1" class="unselected" @click="setPoint('y4x1',pointType)"></td>
+                <td id="y4x2" class="unselected" @click="setPoint('y4x2',pointType)"></td>
+                <td id="y4x3" class="unselected" @click="setPoint('y4x3',pointType)"></td>
+                <td id="y4x4" class="unselected" @click="setPoint('y4x4',pointType)"></td>
+                <td id="y4x5" class="unselected" @click="setPoint('y4x5',pointType)"></td>
             </tr>
             <tr>
-                <td id="id51" class="unselected" @click="setPoint('id51',pointType)"></td>
-                <td id="id52" class="unselected" @click="setPoint('id52',pointType)"></td>
-                <td id="id53" class="unselected" @click="setPoint('id53',pointType)"></td>
-                <td id="id54" class="unselected" @click="setPoint('id54',pointType)"></td>
-                <td id="id55" class="unselected" @click="setPoint('id55',pointType)"></td>
-                <td id="id56" class="unselected" @click="setPoint('id56',pointType)"></td>
+                <td id="y5x0" class="unselected" @click="setPoint('y5x0',pointType)"></td>
+                <td id="y5x1" class="unselected" @click="setPoint('y5x1',pointType)"></td>
+                <td id="y5x2" class="unselected" @click="setPoint('y5x2',pointType)"></td>
+                <td id="y5x3" class="unselected" @click="setPoint('y5x3',pointType)"></td>
+                <td id="y5x4" class="unselected" @click="setPoint('y5x4',pointType)"></td>
+                <td id="y5x5" class="unselected" @click="setPoint('y5x5',pointType)"></td>
             </tr>
         </table>
     </section>
@@ -56,8 +56,27 @@
 
 <script>
 export default {
-    props: [ 'height' , 'width' , 'pointType' ],
+    props: [ 'height' , 'width' , 'pointType' , 'simulationState' ],
+    data() {
+        return{
+            grid: [],
+            // TO DO: Delete temp variables.
+            tempHeight: 6,
+            tempWidth: 6,
+        };
+    },
     methods: {
+        // TO DO: move to helper.
+        updateGrid( point , changeType ) {
+            const idX = (point.id).indexOf('x');
+            const x = (point.id).substring(idX+1);
+            const idY = (point.id).indexOf('y');
+            const y = (point.id).substring(idY+1,idX);
+            this.grid[y][x] = changeType;
+            console.log(y+','+x);
+            console.log(this.grid);
+        },
+        // TO DO: move to helper.
         changeCell( point , changeType ) {
             point.setAttribute('class',changeType);
             const style = document.createAttribute('style');
@@ -67,6 +86,7 @@ export default {
                 style.value = 'border: solid 1px #fa0000; background: #c005056b;'
             }
             point.setAttributeNode(style);
+            this.updateGrid( point , changeType );
         },
         setPoint( id , pointType ) {
             const point = document.getElementById(id);
@@ -91,8 +111,28 @@ export default {
             }
             table.appendChild(newRow);
         }  
+        // TO DO: Delte.
         console.log(this.height+' '+this.width);
-    },/*
+    },
+    updated: function() {
+        if(this.simulationState === 'launched') {
+            // TO DO: Delete.
+            console.log('Simulation launched');
+            // TO DO: move to a helper.
+            for(let i=0; i<this.tempHeight; i++) {
+                const row = [];
+                for(let j=0; j<this.tempWidth; j++) {
+                    row.push('null');
+                }
+                this.grid.push(row);
+            }
+            // TO DO: delete.
+            console.log(this.grid)
+            // Note: keep on this file.
+            this.$emit( 'change-simulation-state' , 'inProgres');
+        }
+    },
+    /*
     updated: function() {
         const table = document.getElementById("grid");
         while (table.firstChild) {
