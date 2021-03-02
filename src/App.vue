@@ -2,9 +2,11 @@
   <div class="container">
     <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
     <grid-form @create-new-grid="createCustomGrid" tittle="Please enter your desired 2-D grid size"></grid-form>
-    <img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
-    <grid v-else :height="height" :width="width"></grid>
-    <pandemic-points @change-pnt-to-set="changePointToSet" v-if="height != 0 && width != 0"></pandemic-points>
+    <!---<img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
+    <grid v-else :height="height" :width="width"></grid> 
+    <pandemic-points @change-pnt-to-set="changePointToSet" v-if="height != 0 && width != 0"></pandemic-points> --->
+    <grid :height="height" :width="width" :pointType="pointType"></grid> 
+    <pandemic-points @change-pnt-to-set="changePointToSet"></pandemic-points>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ export default {
     return{
       height: 0,
       width:  0,
-      pointToSet: null,
+      pointType: null,
     };
   },
   methods: {
@@ -29,8 +31,9 @@ export default {
       this.height = inputHeight;
       this.width  = inputWidth;
     },
-    changePointToSet( pointsToSet ) {
-      this.pointToSet = pointsToSet; 
+    changePointToSet( pointType ) {
+      this.pointType = pointType; 
+      console.log(this.pointType)
     }
   },
 }
