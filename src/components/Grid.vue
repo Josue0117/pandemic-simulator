@@ -132,11 +132,23 @@ export default {
                     }
                     if( infectedIds ) {
                         console.log(infectedIds)
-                        infectedIds.forEach(element => {
-                            if( this.grid[element.i-1][element.j] ){ this.setPoint( this.grid[element.i-1][element.j] , 'infected' )}
-                            if( this.grid[element.i+1][element.j] ){ this.setPoint( this.grid[element.i+1][element.j] , 'infected' )}
-                            if( this.grid[element.i][element.j-1] ){ this.setPoint( this.grid[element.i][element.j-1] , 'infected' )}
-                            if( this.grid[element.i][element.j+1] ){ this.setPoint( this.grid[element.i][element.j+1] , 'infected' )}
+                        infectedIds.forEach(v => {
+                            const positionCellUp = 'y'+(v.i-1)+'x'+(v.j);
+                            const positionCellDown  = 'y'+(v.i+1)+'x'+(v.j);
+                            const positionCellLeft  = 'y'+(v.i)+'x'+(v.j-1);
+                            const positionCellRigth = 'y'+(v.i)+'x'+(v.j+1);
+                            if( v.i-1 > -1 && this.grid[v.i-1][v.j] == positionCellUp ){
+                                this.setPoint( this.grid[v.i-1][v.j] , 'infected' )
+                            }
+                            if( v.i+1 < this.tempHeight && this.grid[v.i+1][v.j] == positionCellDown ){
+                                this.setPoint( this.grid[v.i+1][v.j] , 'infected' )
+                            }
+                            if( v.j-1 > -1 && this.grid[v.i][v.j-1] == positionCellLeft ){
+                                this.setPoint( this.grid[v.i][v.j-1] , 'infected' )
+                            }
+                            if( v.j+1 < this.tempWidth && this.grid[v.i][v.j+1] == positionCellRigth ){
+                                this.setPoint( this.grid[v.i][v.j+1] , 'infected' )
+                            }
                         });
                     }
             //    }, 2000);
