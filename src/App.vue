@@ -2,19 +2,19 @@
   <div class="container">
     <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
     <grid-form @create-new-grid="createCustomGrid" tittle="Please enter your desired 2-D grid size"></grid-form>
-    <!---<img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
-    <grid v-else :height="height" :width="width"></grid> 
-    <pandemic-points @change-pnt-to-set="changePointToSet" v-if="height != 0 && width != 0"></pandemic-points> --->
-    <grid 
+    <img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
+    <grid2 
+      v-else
       :height="height" 
       :width="width" 
       :pointType="pointType" 
-      :simulationState="simulationState" 
-      @change-simulation-state="changeSimulationState">
-    </grid> 
+      :simulationState="simulationState"
+      :gridCreated="gridCreated">
+    </grid2> 
     <pandemic-points 
       @change-pnt-to-set="changePointToSet" 
-      @startSimulation="launchSimulation">
+      @startSimulation="launchSimulation"
+      v-if="height != 0 && width != 0">
     </pandemic-points>
   </div>
 </template>
@@ -22,24 +22,26 @@
 <script>
 import TittleBar from './components/TittleBar.vue'
 import GridForm from './components/GridForm.vue'
-import Grid from './components/Grid.vue'
+import Grid2 from './components/Grid2.vue'
 import PandemicPoints from './components/PandemicPoints.vue'
 
 export default {
   name: 'App',
-  components: { TittleBar , GridForm , Grid , PandemicPoints },
+  components: { TittleBar , GridForm , Grid2 , PandemicPoints },
   data() {
     return{
       height: 0,
       width:  0,
       pointType: null,
       simulationState: 'unlaunched',
+      gridCreated: false,
     };
   },
   methods: {
     createCustomGrid( inputHeight , inputWidth ) {
       this.height = inputHeight;
       this.width  = inputWidth;
+      this.gridCreated = true;
     },
     changeSimulationState( newState ){
       this.simulationState = newState;

@@ -1,0 +1,257 @@
+<template>
+    <section>
+        <header>New Simulation</header>
+        <table id="grid" @click="setPoint()">
+            <tr>
+                <td id="y0x0" class="unselected" @click="setPoint('y0x0',pointType)"></td>
+                <td id="y0x1" class="unselected" @click="setPoint('y0x1',pointType)"></td>
+                <td id="y0x2" class="unselected" @click="setPoint('y0x2',pointType)"></td>
+                <td id="y0x3" class="unselected" @click="setPoint('y0x3',pointType)"></td>
+                <td id="y0x4" class="unselected" @click="setPoint('y0x4',pointType)"></td>
+                <td id="y0x5" class="unselected" @click="setPoint('y0x5',pointType)"></td>
+            </tr>
+            
+            <tr>
+                <td id="y1x0" class="unselected" @click="setPoint('y1x0',pointType)"></td>
+                <td id="y1x1" class="unselected" @click="setPoint('y1x1',pointType)"></td>
+                <td id="y1x2" class="unselected" @click="setPoint('y1x2',pointType)"></td>
+                <td id="y1x3" class="unselected" @click="setPoint('y1x3',pointType)"></td>
+                <td id="y1x4" class="unselected" @click="setPoint('y1x4',pointType)"></td>
+                <td id="y1x5" class="unselected" @click="setPoint('y1x5',pointType)"></td>
+            </tr>
+            <tr>
+                <td id="y2x0" class="unselected" @click="setPoint('y2x0',pointType)"></td>
+                <td id="y2x1" class="unselected" @click="setPoint('y2x1',pointType)"></td>
+                <td id="y2x2" class="unselected" @click="setPoint('y2x2',pointType)"></td>
+                <td id="y2x3" class="unselected" @click="setPoint('y2x3',pointType)"></td>
+                <td id="y2x4" class="unselected" @click="setPoint('y2x4',pointType)"></td>
+                <td id="y2x5" class="unselected" @click="setPoint('y2x5',pointType)"></td>
+            </tr>
+            <tr>
+                <td id="y3x0" class="unselected" @click="setPoint('y3x0',pointType)"></td>
+                <td id="y3x1" class="unselected" @click="setPoint('y3x1',pointType)"></td>
+                <td id="y3x2" class="unselected" @click="setPoint('y3x2',pointType)"></td>
+                <td id="y3x3" class="unselected" @click="setPoint('y3x3',pointType)"></td>
+                <td id="y3x4" class="unselected" @click="setPoint('y3x4',pointType)"></td>
+                <td id="y3x5" class="unselected" @click="setPoint('y3x5',pointType)"></td>
+            </tr>
+            <tr>
+                <td id="y4x0" class="unselected" @click="setPoint('y4x0',pointType)"></td>
+                <td id="y4x1" class="unselected" @click="setPoint('y4x1',pointType)"></td>
+                <td id="y4x2" class="unselected" @click="setPoint('y4x2',pointType)"></td>
+                <td id="y4x3" class="unselected" @click="setPoint('y4x3',pointType)"></td>
+                <td id="y4x4" class="unselected" @click="setPoint('y4x4',pointType)"></td>
+                <td id="y4x5" class="unselected" @click="setPoint('y4x5',pointType)"></td>
+            </tr>
+            <tr>
+                <td id="y5x0" class="unselected" @click="setPoint('y5x0',pointType)"></td>
+                <td id="y5x1" class="unselected" @click="setPoint('y5x1',pointType)"></td>
+                <td id="y5x2" class="unselected" @click="setPoint('y5x2',pointType)"></td>
+                <td id="y5x3" class="unselected" @click="setPoint('y5x3',pointType)"></td>
+                <td id="y5x4" class="unselected" @click="setPoint('y5x4',pointType)"></td>
+                <td id="y5x5" class="unselected" @click="setPoint('y5x5',pointType)"></td>
+            </tr>
+            
+        </table>
+    </section>
+</template>
+
+<script>
+export default {
+    props: [ 'height' , 'width' , 'pointType' , 'simulationState' ],
+    data() {
+        return{
+            grid: [],
+            // TO DO: Delete temp variables.
+            tempHeight: 6,
+            tempWidth: 6,
+        };
+    },
+    methods: {
+        // TO DO: move to a helper.
+        createGrid(){
+            for(let i=0; i<this.tempHeight; i++) {
+                const row = [];
+                for(let j=0; j<this.tempWidth; j++) {
+                    row.push('y'+i+'x'+j);
+                }
+                this.grid.push(row);
+            }
+            console.log(this.grid)
+        },        
+        // TO DO: move to helper.
+        updateGrid( point , pointType , changeType ) {
+            const idX = (point.id).indexOf('x');
+            const x = (point.id).substring(idX+1);
+            const idY = (point.id).indexOf('y');
+            const y = (point.id).substring(idY+1,idX);
+            if( changeType === 'add' ) {
+                this.grid[y][x] = pointType;
+            } else {
+                this.grid[y][x] = 'y'+y+'x'+x;
+            }
+            console.log(y+','+x);
+            console.log(this.grid);
+        },
+        // TO DO: move to helper.
+        updateTableStyle( point , pointType , changeType ) {
+            if( changeType === 'add' ) {
+                point.setAttribute('class',pointType);
+                const style = document.createAttribute('style');
+                if( pointType === 'inmune' ) {
+                    style.value = 'border: solid 1px #00fa0c; background: #05c03d6b;'
+                } else {
+                    style.value = 'border: solid 1px #fa0000; background: #c005056b;'
+                }
+                point.setAttributeNode(style);
+            } else {
+                point.setAttribute('class','unselected');
+                point.removeAttribute('style');
+            }
+        },
+        setPoint(  ) {
+            /*
+            const point = document.getElementById( event.target.id );
+            if( point.className === 'unselected' ) {
+                this.updateGrid( point , this.pointType , 'add' );
+                this.updateTableStyle( point , this.pointType , 'add' );
+            } else if( point.className === pointType ) {
+                this.updateGrid( point , this.pointType , 'remove' );
+                this.updateTableStyle( point , this.pointType , 'remove' );
+            }*/
+            alert(event.target.id);
+        },
+        runSimulation() {
+            console.log('1');
+            let gridUpdated = false;
+            let iteration = setInterval(function() {
+            console.log('2');
+            console.log(this.grid[0][0]);
+                let infectedIds = [];
+                for(let i=0; i<this.tempHeight; i++) {
+                    for(let j=0; j<this.tempWidth; j++) {
+                        if(this.grid[i][j] === 'infected'){
+                            infectedIds.push( { 'i':i , 'j':j } );
+                        }
+                    }
+                }
+                if( infectedIds ) {
+                    infectedIds.forEach(v => {
+                        const positionCellUp = 'y'+(v.i-1)+'x'+(v.j);
+                        const positionCellDown  = 'y'+(v.i+1)+'x'+(v.j);
+                        const positionCellLeft  = 'y'+(v.i)+'x'+(v.j-1);
+                        const positionCellRigth = 'y'+(v.i)+'x'+(v.j+1);
+                        if( v.i-1 > -1 && this.grid[v.i-1][v.j] == positionCellUp ){
+                            this.setPoint( this.grid[v.i-1][v.j] , 'infected' );
+                            this.gridUpdated = true;
+                        }
+                        if( v.i+1 < this.tempHeight && this.grid[v.i+1][v.j] == positionCellDown ){
+                            this.setPoint( this.grid[v.i+1][v.j] , 'infected' );
+                            this.gridUpdated = true;
+                        }
+                        if( v.j-1 > -1 && this.grid[v.i][v.j-1] == positionCellLeft ){
+                            this.setPoint( this.grid[v.i][v.j-1] , 'infected' );
+                            this.gridUpdated = true;
+                        }
+                        if( v.j+1 < this.tempWidth && this.grid[v.i][v.j+1] == positionCellRigth ){
+                                this.setPoint( this.grid[v.i][v.j+1] , 'infected' );
+                                this.gridUpdated = true;
+                            }
+                    });
+                }
+                if( !gridUpdated ){
+                    clearInterval(iteration);
+                }
+            }, 1000);
+            
+
+        },
+    },
+    mounted: function() {
+        const table = document.getElementById("grid");
+        for(let i=0; i<this.height; i++){
+            var newRow = document.createElement('tr');
+            for(let j=0; j<this.width; j++){
+                var newTd = document.createElement('td');
+                const id = 'y'+i+'x'+j;
+                newTd.setAttribute('id','id'+i+','+j);
+                newTd.setAttribute('class','grid');
+                newTd.setAttribute('onClick', this.setPoint("'"+id+"','"+this.pointType+"'"));
+                newRow.appendChild(newTd);
+            }
+            table.appendChild(newRow);
+        }
+        this.createGrid();  
+    },/*
+    updated: function() {
+        if( this.simulationState === 'launched' ) {
+            this.runSimulation();
+            this.$emit( 'change-simulation-state' , 'ended');
+        }
+    },
+    
+            <tr>
+                <td id="y5x0" class="unselected" @click="setPoint('y5x0',pointType)"></td>
+                <td id="y5x1" class="unselected" @click="setPoint('y5x1',pointType)"></td>
+                <td id="y5x2" class="unselected" @click="setPoint('y5x2',pointType)"></td>
+                <td id="y5x3" class="unselected" @click="setPoint('y5x3',pointType)"></td>
+                <td id="y5x4" class="unselected" @click="setPoint('y5x4',pointType)"></td>
+                <td id="y5x5" class="unselected" @click="setPoint('y5x5',pointType)"></td>
+            </tr>
+    
+    */
+    updated: function() {/*
+        const table = document.getElementById("grid");
+        while (table.firstChild) {
+            table.removeChild(table.firstChild);
+        }
+
+        for(let i=0; i<this.height; i++){
+            var newRow = document.createElement('tr');
+            for(let j=0; j<this.width; j++){
+                var newTd = document.createElement('td');
+                const id = 'y'+i+'x'+j;
+                newTd.setAttribute('id',id);
+                newTd.setAttribute('class','unselected');
+                //newTd.setAttribute('onClick', this.setPoint("'"+id+"','"+this.pointType+"'"));
+                newRow.appendChild(newTd);
+            }
+            table.appendChild(newRow);
+        }  */
+        this.table = `<tr>
+                <td id="y0x0" class="unselected" @click="setPoint('y0x0',pointType)"></td>
+                <td id="y0x1" class="unselected" @click="setPoint('y0x1',pointType)"></td>
+                <td id="y0x2" class="unselected" @click="setPoint('y0x2',pointType)"></td>
+                <td id="y0x3" class="unselected" @click="setPoint('y0x3',pointType)"></td>
+                <td id="y0x4" class="unselected" @click="setPoint('y0x4',pointType)"></td>
+                <td id="y0x5" class="unselected" @click="setPoint('y0x5',pointType)"></td>
+            </tr>`
+        console.log(this.height+' '+this.width);
+    },
+}
+</script>
+
+<style scoped>
+    section{
+        position: absolute;
+        top: 127.81px;
+        width: 53%;
+        left: 47%;
+        height: 450px;
+        border-radius: 15px;
+        border: solid 1px #48464e;
+    }
+
+    header{
+        height: 5%;
+        background: #05c03d;
+        border-radius:15px 15px 0px 0px;
+        border: solid 1px #00fa0c;
+        font-weight: bold;
+    }
+
+    table{
+        width: 100%;
+        height: 95%;
+    }
+</style>
