@@ -32,7 +32,7 @@
 export default {
     data() {
         return{
-            pointsToSet: null,
+            pointsToSet: 'infected',
         };
     },
     methods: {

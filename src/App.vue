@@ -1,23 +1,28 @@
 <template>
   <div class="container">
     <tittle-bar tittle="Pandemic Simulator"></tittle-bar>
-    <grid-form @create-new-grid="createCustomGrid" tittle="Please enter your desired 2-D grid size"></grid-form>
-    <!---<img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
-    <grid v-else :height="height" :width="width"></grid> 
-    <pandemic-points @change-pnt-to-set="changePointToSet" v-if="height != 0 && width != 0"></pandemic-points> --->
+    <grid-form 
+      @create-new-grid="createCustomGrid" 
+      tittle="Please enter your desired 2-D grid size">
+    </grid-form>
+    <img v-if="height == 0 && width == 0" src="./assets/virus3.jpg">
     <grid 
+      v-else
       :height="height" 
       :width="width" 
       :pointType="pointType" 
       :simulationState="simulationState" 
-      :gridCreated="gridCreated"
-      @change-grid-state="changeGridState"
       @change-simulation-state="changeSimulationState">
     </grid> 
     <pandemic-points 
+      v-if="height != 0 && width != 0"
       @change-pnt-to-set="changePointToSet" 
       @startSimulation="launchSimulation">
     </pandemic-points>
+    <new-simulation-form 
+      v-if="simulationState == 'ended'"
+      @new-simulation="newSimulation">
+    </new-simulation-form>
   </div>
 </template>
 
@@ -26,26 +31,23 @@ import TittleBar from './components/TittleBar.vue'
 import GridForm from './components/GridForm.vue'
 import Grid from './components/Grid.vue'
 import PandemicPoints from './components/PandemicPoints.vue'
+import NewSimulationForm from './components/NewSimulationForm'
 
 export default {
   name: 'App',
-  components: { TittleBar , GridForm , Grid , PandemicPoints },
+  components: { TittleBar , GridForm , Grid , PandemicPoints , NewSimulationForm },
   data() {
     return{
       height: 0,
       width:  0,
-      pointType: null,
+      pointType: 'infected',
       simulationState: 'unlaunched',
-      gridCreated: false,
     };
   },
   methods: {
     createCustomGrid( inputHeight , inputWidth ) {
       this.height = inputHeight;
       this.width  = inputWidth;
-    },
-    changeGridState() {
-      this.gridCreated = true;
     },
     changeSimulationState( newState ){
       this.simulationState = newState;
@@ -57,6 +59,11 @@ export default {
     launchSimulation() {
       this.simulationState = 'launched';
     },
+    newSimulation() {
+      this.height = 0;
+      this.width = 0;
+      this.simulationState = 'unlaunched';
+    }
   },
 }
 </script>

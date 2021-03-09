@@ -2,54 +2,6 @@
     <section>
         <header>New Simulation</header>
         <table id="gridTable">
-            <tr>
-                <td id="y0x0" class="unselected" @click="setPoint('y0x0',pointType)"></td>
-                <td id="y0x1" class="unselected" @click="setPoint('y0x1',pointType)"></td>
-                <td id="y0x2" class="unselected" @click="setPoint('y0x2',pointType)"></td>
-                <td id="y0x3" class="unselected" @click="setPoint('y0x3',pointType)"></td>
-                <td id="y0x4" class="unselected" @click="setPoint('y0x4',pointType)"></td>
-                <td id="y0x5" class="unselected" @click="setPoint('y0x5',pointType)"></td>
-            </tr>
-            <tr>
-                <td id="y1x0" class="unselected" @click="setPoint('y1x0',pointType)"></td>
-                <td id="y1x1" class="unselected" @click="setPoint('y1x1',pointType)"></td>
-                <td id="y1x2" class="unselected" @click="setPoint('y1x2',pointType)"></td>
-                <td id="y1x3" class="unselected" @click="setPoint('y1x3',pointType)"></td>
-                <td id="y1x4" class="unselected" @click="setPoint('y1x4',pointType)"></td>
-                <td id="y1x5" class="unselected" @click="setPoint('y1x5',pointType)"></td>
-            </tr>
-            <tr>
-                <td id="y2x0" class="unselected" @click="setPoint('y2x0',pointType)"></td>
-                <td id="y2x1" class="unselected" @click="setPoint('y2x1',pointType)"></td>
-                <td id="y2x2" class="unselected" @click="setPoint('y2x2',pointType)"></td>
-                <td id="y2x3" class="unselected" @click="setPoint('y2x3',pointType)"></td>
-                <td id="y2x4" class="unselected" @click="setPoint('y2x4',pointType)"></td>
-                <td id="y2x5" class="unselected" @click="setPoint('y2x5',pointType)"></td>
-            </tr>
-            <tr>
-                <td id="y3x0" class="unselected" @click="setPoint('y3x0',pointType)"></td>
-                <td id="y3x1" class="unselected" @click="setPoint('y3x1',pointType)"></td>
-                <td id="y3x2" class="unselected" @click="setPoint('y3x2',pointType)"></td>
-                <td id="y3x3" class="unselected" @click="setPoint('y3x3',pointType)"></td>
-                <td id="y3x4" class="unselected" @click="setPoint('y3x4',pointType)"></td>
-                <td id="y3x5" class="unselected" @click="setPoint('y3x5',pointType)"></td>
-            </tr>
-            <tr>
-                <td id="y4x0" class="unselected" @click="setPoint('y4x0',pointType)"></td>
-                <td id="y4x1" class="unselected" @click="setPoint('y4x1',pointType)"></td>
-                <td id="y4x2" class="unselected" @click="setPoint('y4x2',pointType)"></td>
-                <td id="y4x3" class="unselected" @click="setPoint('y4x3',pointType)"></td>
-                <td id="y4x4" class="unselected" @click="setPoint('y4x4',pointType)"></td>
-                <td id="y4x5" class="unselected" @click="setPoint('y4x5',pointType)"></td>
-            </tr>
-            <tr>
-                <td id="y5x0" class="unselected" @click="setPoint('y5x0',pointType)"></td>
-                <td id="y5x1" class="unselected" @click="setPoint('y5x1',pointType)"></td>
-                <td id="y5x2" class="unselected" @click="setPoint('y5x2',pointType)"></td>
-                <td id="y5x3" class="unselected" @click="setPoint('y5x3',pointType)"></td>
-                <td id="y5x4" class="unselected" @click="setPoint('y5x4',pointType)"></td>
-                <td id="y5x5" class="unselected" @click="setPoint('y5x5',pointType)"></td>
-            </tr>
         </table>
     </section>
 </template>
@@ -58,7 +10,7 @@
 import helper from '../helper.js'
 
 export default {
-    props: [ 'height' , 'width' , 'pointType' , 'simulationState' , 'gridCreated' ],
+    props: [ 'height' , 'width' , 'pointType' , 'simulationState' ],
     data() {
         return{
             grid: [],
@@ -89,7 +41,6 @@ export default {
                         }
                     }
                 }
-                console.log('in progrs')
                 if( infectedIds ) {
                     infectedIds.forEach(v => {
                         const positionCellUp = 'y'+(v.i-1)+'x'+(v.j);
@@ -109,9 +60,9 @@ export default {
                             this.setPoint( this.grid[v.i][v.j+1] , 'infected' );
                         }
                     });
-                    console.log( this.pointsUpdated )
                 } 
                 if( !this.pointsUpdated ){
+                    console.log(this.simulationState )
                     clearInterval( interval );
                 }
             }, 2000);
@@ -137,29 +88,14 @@ export default {
         },
     },
     mounted: function() {
-        const table = document.getElementById("gridTable");
-
-        for(let i=0; i<this.height; i++){
-            var newRow = document.createElement('tr');
-            for(let j=0; j<this.width; j++){
-                var newTd = document.createElement('td');
-                newTd.setAttribute('id','id'+i+','+j);
-                newTd.setAttribute('class','grid');
-                newRow.appendChild(newTd);
-            }
-            table.appendChild(newRow);
-        }
-        helper.createGrid( this.height , this.width , this.grid );  
+        this.createTable();
+        helper.createGrid( this.height , this.width , this.grid );
     },
     updated: function() {
-        if( !this.gridCreated ){
-            console.log(this.pointType)
-            this.createTable();
-            helper.createGrid( this.height , this.width , this.grid );
-            this.$emit( 'change-grid-state' );
-        }
         if( this.simulationState === 'launched'){
+            console.log(this.simulationState)
             this.runSimulation();
+            this.$emit( 'change-simulation-state' , 'ended' );
         }
     },
 }
