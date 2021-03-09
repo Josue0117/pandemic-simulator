@@ -56,21 +56,37 @@
 
 <script>
 export default {
-    props: [ 'height' , 'width' , 'pointType' , 'simulationState' ],
+    props: [ 'height' , 'width' , 'pointType' , 'simulationState' , 'gridCreated' ],
     data() {
         return{
             grid: [],
-            // TO DO: Delete temp variables.
-            tempHeight: 6,
-            tempWidth: 6,
         };
     },
     methods: {
+        // TO DO: move to helper.
+        createTable(){
+            const table = document.getElementById('grid');
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            for(let i=0; i<this.height; i++){
+                var newRow = document.createElement('tr');
+                for(let j=0; j<this.width; j++){
+                    var newTd = document.createElement('td');
+                    newTd.setAttribute('id','y'+i+'x'+j);
+                    newTd.setAttribute('class','unselected');
+                    newTd.onclick = () => this.setPoint('y'+i+'x'+j,this.pointType);
+                    newRow.appendChild(newTd);
+                }
+                table.appendChild(newRow);
+            }
+        },
         // TO DO: move to a helper.
         createGrid(){
-            for(let i=0; i<this.tempHeight; i++) {
+            for(let i=0; i<this.height; i++) {
                 const row = [];
-                for(let j=0; j<this.tempWidth; j++) {
+                for(let j=0; j<this.width; j++) {
                     row.push('y'+i+'x'+j);
                 }
                 this.grid.push(row);
@@ -108,7 +124,6 @@ export default {
             }
         },
         setPoint( id , pointType ) {
-            console.log(id);
             const point = document.getElementById(id);
             if( point.className === 'unselected' ) {
                 this.updateGrid( point , pointType , 'add' );
@@ -117,6 +132,7 @@ export default {
                 this.updateGrid( point , pointType , 'remove' );
                 this.updateTableStyle( point , pointType , 'remove' );
             }
+            console.log(this.grid);
         },
         runSimulation() {
 
@@ -170,37 +186,14 @@ export default {
             table.appendChild(newRow);
         }
         this.createGrid();  
-        // TO DO: Delte.
-        console.log(this.height+' '+this.width);
-    },/*
-    updated: function() {
-        if( this.simulationState === 'launched' ) {
-            this.runSimulation();
-            // TO DO: Delete.
-            console.log('Simulation launched');
-            // Note: keep on this file.
-            this.$emit( 'change-simulation-state' , 'ended');
-        }
     },
-    */
     updated: function() {
-        const table = document.getElementById("grid");
-        while (table.firstChild) {
-            table.removeChild(table.firstChild);
+        if( !this.gridCreated ){
+            this.createTable();
+            this.createGrid();
+            this.$emit( 'change-grid-state' );
         }
-
-        for(let i=0; i<this.height; i++){
-            var newRow = document.createElement('tr');
-            for(let j=0; j<this.width; j++){
-                var newTd = document.createElement('td');
-                newTd.setAttribute('id','y'+i+'x'+j);
-                newTd.setAttribute('class','grid');
-                newTd.onclick = () => this.setPoint('y'+i+'x'+j,this.pointType);
-                newRow.appendChild(newTd);
-            }
-            table.appendChild(newRow);
-        }  
-        console.log(this.height+' '+this.width);
+        
     },
 }
 </script>

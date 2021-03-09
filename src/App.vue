@@ -10,6 +10,8 @@
       :width="width" 
       :pointType="pointType" 
       :simulationState="simulationState" 
+      :gridCreated="gridCreated"
+      @change-grid-state="changeGridState"
       @change-simulation-state="changeSimulationState">
     </grid> 
     <pandemic-points 
@@ -34,12 +36,16 @@ export default {
       width:  0,
       pointType: null,
       simulationState: 'unlaunched',
+      gridCreated: false,
     };
   },
   methods: {
     createCustomGrid( inputHeight , inputWidth ) {
       this.height = inputHeight;
       this.width  = inputWidth;
+    },
+    changeGridState() {
+      this.gridCreated = true;
     },
     changeSimulationState( newState ){
       this.simulationState = newState;
