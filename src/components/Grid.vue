@@ -108,6 +108,7 @@ export default {
             }
         },
         setPoint( id , pointType ) {
+            console.log(id);
             const point = document.getElementById(id);
             if( point.className === 'unselected' ) {
                 this.updateGrid( point , pointType , 'add' );
@@ -171,7 +172,7 @@ export default {
         this.createGrid();  
         // TO DO: Delte.
         console.log(this.height+' '+this.width);
-    },
+    },/*
     updated: function() {
         if( this.simulationState === 'launched' ) {
             this.runSimulation();
@@ -181,7 +182,7 @@ export default {
             this.$emit( 'change-simulation-state' , 'ended');
         }
     },
-    /*
+    */
     updated: function() {
         const table = document.getElementById("grid");
         while (table.firstChild) {
@@ -192,14 +193,15 @@ export default {
             var newRow = document.createElement('tr');
             for(let j=0; j<this.width; j++){
                 var newTd = document.createElement('td');
-                newTd.setAttribute('id','id'+i+','+j);
+                newTd.setAttribute('id','y'+i+'x'+j);
                 newTd.setAttribute('class','grid');
+                newTd.onclick = () => this.setPoint('y'+i+'x'+j,this.pointType);
                 newRow.appendChild(newTd);
             }
             table.appendChild(newRow);
         }  
         console.log(this.height+' '+this.width);
-    },*/
+    },
 }
 </script>
 
