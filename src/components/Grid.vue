@@ -1,7 +1,7 @@
 <template>
     <section>
         <header>New Simulation</header>
-        <table id="grid">
+        <table id="gridTable">
             <tr>
                 <td id="y0x0" class="unselected" @click="setPoint('y0x0',pointType)"></td>
                 <td id="y0x1" class="unselected" @click="setPoint('y0x1',pointType)"></td>
@@ -60,12 +60,13 @@ export default {
     data() {
         return{
             grid: [],
+            pointsUpdated: false,
         };
     },
     methods: {
         // TO DO: move to helper.
         createTable(){
-            const table = document.getElementById('grid');
+            const table = document.getElementById('gridTable');
             while (table.firstChild) {
                 table.removeChild(table.firstChild);
             }
@@ -128,52 +129,69 @@ export default {
             if( point.className === 'unselected' ) {
                 this.updateGrid( point , pointType , 'add' );
                 this.updateTableStyle( point , pointType , 'add' );
+                this.pointsUpdated = true;
             } else if( point.className === pointType ) {
                 this.updateGrid( point , pointType , 'remove' );
                 this.updateTableStyle( point , pointType , 'remove' );
+                this.pointsUpdated = true;
             }
-            console.log(this.grid);
         },
         runSimulation() {
+/*
+        var myFunc01 = function() {
+            var i = 0;
+            // store the interval id to clear in future
+            var intr = setInterval(function() {
+                document.getElementById('d01').innerHTML += 100 - i + "<br>";
+                // clear the interval if `i` reached 100
+                if (++i == 100){
+                    clearInterval(intr);
+                } 
+            }, 1000)
 
-            //let gridUpdated = false;
-            //do {
-//                setTimeout(function(){
-                    let infectedIds = [];
-                    for(let i=0; i<this.tempHeight; i++) {
-                        for(let j=0; j<this.tempWidth; j++) {
-                            if(this.grid[i][j] === 'infected'){
-                                infectedIds.push( { 'i':i , 'j':j } );
-                            }
+        }
+*/
+            
+            let interval = setInterval( () => {
+                this.pointsUpdated = false;
+                let infectedIds = [];
+                for( let i=0; i<this.height; i++ ) {
+                    for( let j=0; j<this.width; j++ ) {
+                        if( this.grid[i][j] === 'infected' ){
+                            infectedIds.push( { 'i':i , 'j':j } );
                         }
                     }
-                    if( infectedIds ) {
-                        console.log(infectedIds)
-                        infectedIds.forEach(v => {
-                            const positionCellUp = 'y'+(v.i-1)+'x'+(v.j);
-                            const positionCellDown  = 'y'+(v.i+1)+'x'+(v.j);
-                            const positionCellLeft  = 'y'+(v.i)+'x'+(v.j-1);
-                            const positionCellRigth = 'y'+(v.i)+'x'+(v.j+1);
-                            if( v.i-1 > -1 && this.grid[v.i-1][v.j] == positionCellUp ){
-                                this.setPoint( this.grid[v.i-1][v.j] , 'infected' )
-                            }
-                            if( v.i+1 < this.tempHeight && this.grid[v.i+1][v.j] == positionCellDown ){
-                                this.setPoint( this.grid[v.i+1][v.j] , 'infected' )
-                            }
-                            if( v.j-1 > -1 && this.grid[v.i][v.j-1] == positionCellLeft ){
-                                this.setPoint( this.grid[v.i][v.j-1] , 'infected' )
-                            }
-                            if( v.j+1 < this.tempWidth && this.grid[v.i][v.j+1] == positionCellRigth ){
-                                this.setPoint( this.grid[v.i][v.j+1] , 'infected' )
-                            }
-                        });
-                    }
-            //    }, 2000);
-            //} while( gridUpdated );
+                }
+                console.log('in progrs')
+                if( infectedIds ) {
+                    infectedIds.forEach(v => {
+                        const positionCellUp = 'y'+(v.i-1)+'x'+(v.j);
+                        const positionCellDown  = 'y'+(v.i+1)+'x'+(v.j);
+                        const positionCellLeft  = 'y'+(v.i)+'x'+(v.j-1);
+                        const positionCellRigth = 'y'+(v.i)+'x'+(v.j+1);
+                        if( v.i-1 > -1 && this.grid[v.i-1][v.j] == positionCellUp ){
+                            this.setPoint( this.grid[v.i-1][v.j] , 'infected' );
+                        }
+                        if( v.i+1 < this.height && this.grid[v.i+1][v.j] == positionCellDown ){
+                            this.setPoint( this.grid[v.i+1][v.j] , 'infected' );
+                        }
+                        if( v.j-1 > -1 && this.grid[v.i][v.j-1] == positionCellLeft ){
+                            this.setPoint( this.grid[v.i][v.j-1] , 'infected' );
+                        }
+                        if( v.j+1 < this.width && this.grid[v.i][v.j+1] == positionCellRigth ){
+                            this.setPoint( this.grid[v.i][v.j+1] , 'infected' );
+                        }
+                    });
+                    console.log( this.pointsUpdated )
+                } 
+                if( !this.pointsUpdated ){
+                    clearInterval( interval );
+                }
+            }, 2000);
         },
     },
     mounted: function() {
-        const table = document.getElementById("grid");
+        const table = document.getElementById("gridTable");
 
         for(let i=0; i<this.height; i++){
             var newRow = document.createElement('tr');
@@ -193,7 +211,9 @@ export default {
             this.createGrid();
             this.$emit( 'change-grid-state' );
         }
-        
+        if( this.simulationState === 'launched'){
+            this.runSimulation();
+        }
     },
 }
 </script>
