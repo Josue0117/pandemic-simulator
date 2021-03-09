@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import helper from '../helper.js'
+
 export default {
     props: [ 'height' , 'width' , 'pointType' , 'simulationState' , 'gridCreated' ],
     data() {
@@ -64,94 +66,19 @@ export default {
         };
     },
     methods: {
-        // TO DO: move to helper.
-        createTable(){
-            const table = document.getElementById('gridTable');
-            while (table.firstChild) {
-                table.removeChild(table.firstChild);
-            }
-
-            for(let i=0; i<this.height; i++){
-                var newRow = document.createElement('tr');
-                for(let j=0; j<this.width; j++){
-                    var newTd = document.createElement('td');
-                    newTd.setAttribute('id','y'+i+'x'+j);
-                    newTd.setAttribute('class','unselected');
-                    newTd.onclick = () => this.setPoint('y'+i+'x'+j,this.pointType);
-                    newRow.appendChild(newTd);
-                }
-                table.appendChild(newRow);
-            }
-        },
-        // TO DO: move to a helper.
-        createGrid(){
-            for(let i=0; i<this.height; i++) {
-                const row = [];
-                for(let j=0; j<this.width; j++) {
-                    row.push('y'+i+'x'+j);
-                }
-                this.grid.push(row);
-            }
-            console.log(this.grid)
-        },
-        // TO DO: move to helper.
-        updateGrid( point , pointType , changeType ) {
-            const idX = (point.id).indexOf('x');
-            const x = (point.id).substring(idX+1);
-            const idY = (point.id).indexOf('y');
-            const y = (point.id).substring(idY+1,idX);
-            if( changeType === 'add' ) {
-                this.grid[y][x] = pointType;
-            } else {
-                this.grid[y][x] = 'y'+y+'x'+x;
-            }
-            console.log(y+','+x);
-            console.log(this.grid);
-        },
-        // TO DO: move to helper.
-        updateTableStyle( point , pointType , changeType ) {
-            if( changeType === 'add' ) {
-                point.setAttribute('class',pointType);
-                const style = document.createAttribute('style');
-                if( pointType === 'inmune' ) {
-                    style.value = 'border: solid 1px #00fa0c; background: #05c03d6b;'
-                } else {
-                    style.value = 'border: solid 1px #fa0000; background: #c005056b;'
-                }
-                point.setAttributeNode(style);
-            } else {
-                point.setAttribute('class','unselected');
-                point.removeAttribute('style');
-            }
-        },
         setPoint( id , pointType ) {
             const point = document.getElementById(id);
             if( point.className === 'unselected' ) {
-                this.updateGrid( point , pointType , 'add' );
-                this.updateTableStyle( point , pointType , 'add' );
+                helper.updateGrid( point , pointType , 'add' , this.grid );
+                helper.updateTableStyle( point , pointType , 'add' );
                 this.pointsUpdated = true;
             } else if( point.className === pointType ) {
-                this.updateGrid( point , pointType , 'remove' );
-                this.updateTableStyle( point , pointType , 'remove' );
+                helper.updateGrid( point , pointType , 'remove' , this.grid );
+                helper.updateTableStyle( point , pointType , 'remove' );
                 this.pointsUpdated = true;
             }
         },
-        runSimulation() {
-/*
-        var myFunc01 = function() {
-            var i = 0;
-            // store the interval id to clear in future
-            var intr = setInterval(function() {
-                document.getElementById('d01').innerHTML += 100 - i + "<br>";
-                // clear the interval if `i` reached 100
-                if (++i == 100){
-                    clearInterval(intr);
-                } 
-            }, 1000)
-
-        }
-*/
-            
+        runSimulation() {            
             let interval = setInterval( () => {
                 this.pointsUpdated = false;
                 let infectedIds = [];
@@ -189,6 +116,25 @@ export default {
                 }
             }, 2000);
         },
+        // TO DO: MOVE  TO HELPER
+        createTable() {
+            const table = document.getElementById('gridTable');
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            for(let i=0; i<this.height; i++){
+                var newRow = document.createElement('tr');
+                for(let j=0; j<this.width; j++){
+                    var newTd = document.createElement('td');
+                    newTd.setAttribute('id','y'+i+'x'+j);
+                    newTd.setAttribute('class','unselected');
+                    newTd.onclick = () => this.setPoint('y'+i+'x'+j,this.pointType);
+                    newRow.appendChild(newTd);
+                }
+                table.appendChild(newRow);
+            }
+        },
     },
     mounted: function() {
         const table = document.getElementById("gridTable");
@@ -203,12 +149,13 @@ export default {
             }
             table.appendChild(newRow);
         }
-        this.createGrid();  
+        helper.createGrid( this.height , this.width , this.grid );  
     },
     updated: function() {
         if( !this.gridCreated ){
+            console.log(this.pointType)
             this.createTable();
-            this.createGrid();
+            helper.createGrid( this.height , this.width , this.grid );
             this.$emit( 'change-grid-state' );
         }
         if( this.simulationState === 'launched'){
